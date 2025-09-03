@@ -23,3 +23,9 @@ variable "ingress_ports" {
 variable "vpc_id" {
   
 }
+variable "subnet_id" {
+  
+}
+variable "public_ip" {
+  
+}

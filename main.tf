@@ -14,6 +14,8 @@ module "ec2_instance" {
   ami                 = "ami-02d26659fd82cf299"
   instance_type       = "t2.micro"
   key                 = "demo-key"
+  public_ip           = true
+  subnet_id           = module.vpc.public_subnet_ids[0]
   vpc_id              = module.vpc.vpc_id
   security_group      = [module.ec2_instance.security_group_id]
   security_group_name = "Demo-sg"
@@ -35,6 +37,12 @@ module "ec2_instance" {
       to_port     = 22
       protocol    = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
+    },
+    {
+      from_port   = 3306
+      to_port     = 3306
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
     }
   ]
 }
@@ -49,3 +57,10 @@ module "rds" {
   subnet_ids         = module.vpc.private_subnet_ids
   security_group_ids = [module.ec2_instance.security_group_id]
 }
+
+module "S3" {
+  source = "./S3"
+  bucketname = "prathameshbews3bucket"
+  enable_versioning = "Enabled"
+}
+

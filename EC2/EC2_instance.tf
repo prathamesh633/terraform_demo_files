@@ -3,6 +3,8 @@ resource "aws_instance" "web" {
   instance_type = var.instance_type
   key_name = var.key # Replace with your key pair name
   vpc_security_group_ids = var.security_group
+  subnet_id = var.subnet_id
+  associate_public_ip_address = var.public_ip
   tags = {
     Name = var.instance_name
   }
